@@ -206,14 +206,17 @@ app.get('/', (req, res) => {
     });
 });
 
-// À la fin, remplace app.listen par :
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`\n🚀 Whalix Multi-Sessions démarré`);
-    console.log(`📊 Interface: ${RAILWAY_URL}`);
-    console.log(`🔌 API: ${RAILWAY_URL}/api\n`);
-    
-    createDefaultSessions();
-});
+// Ajoute cette fonction simple avant app.listen
+async function createDefaultSessions() {
+    console.log('📱 Serveur prêt pour les connexions WhatsApp');
+    // Pas de session par défaut pour l'instant
+}
 
+// Ensuite app.listen...
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Whalix Multi-Sessions démarré`);
+    console.log(`📊 Interface: ${RAILWAY_URL}`);
+    createDefaultSessions(); // Maintenant ça marchera
+});
 // Démarrer la connexion WhatsApp
 connectWhatsApp();
