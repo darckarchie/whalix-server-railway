@@ -1,0 +1,17 @@
+{
+  "name": "whalix-server",
+  "version": "1.0.0",
+  "main": "whalix-server.js",
+  "scripts": {
+    "start": "node whalix-server.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.5.0",
+    "qrcode-terminal": "^0.12.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
