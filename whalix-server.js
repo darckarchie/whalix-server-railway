@@ -35,6 +35,12 @@ app.post('/api/session/create', (req, res) => {
     });
 });
 
+// Dans whalix-server.js sur GitHub
+app.use(cors({
+    origin: '*', // Accepte toutes les origines pour le test
+    credentials: true
+}));
+
 // Statut session
 app.get('/api/session/:sessionId/status', (req, res) => {
     res.json({
