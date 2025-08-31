@@ -20,18 +20,18 @@ app.get('/', (req, res) => {
     });
 });
 
-// Créer session (version simple)
 app.post('/api/session/create', (req, res) => {
     const { sessionId, clientName } = req.body;
     
-    // Pour l'instant, on retourne juste un QR de test
+    // Utilise un service gratuit pour générer un QR code de test
+    const testText = `Whalix Test ${Date.now()}`;
+    const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(testText)}`;
+    
     res.json({
-        sessionId,
-        clientName,
-        status: {
-            connected: false,
-            qr: 'TEST_QR_CODE_' + Date.now()
-        }
+        sessionId: sessionId || 'test-001',
+        clientName: clientName || 'Test',
+        status: 'qr_pending',
+        qrCode: qrImageUrl  // Maintenant c'est une vraie URL d'image
     });
 });
 
