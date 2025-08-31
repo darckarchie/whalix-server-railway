@@ -7,6 +7,39 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const RAILWAY_URL = process.env.RAILWAY_STATIC_URL || 'http://localhost:3000';
 
+const sqlite3 = require('sqlite3');
+const { open } = require('sqlite');
+
+let db;
+
+async function initDB() {
+  db = await open({
+    filename: './whalix.db',
+    driver: sqlite3.Database
+  });
+  
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS sessions (
+      session_id TEXT PRIMARY KEY,
+      client_name TEXT,
+      auth_data TEXT,
+      phone_number TEXT,
+      connected INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+}
+
+// Appelle initDB() au démarrage
+initDB();
+
+// Sauvegarde les sessions dans la DB
+async function saveSession(sessionId, authData) {
+  await db.run(
+    'INSERT OR REPLACE INTO sessions (session_id, auth_data) VALUES (?, ?)',
+    [sessionId, JSON.stringify(authData)]
+  );
+}
 
 // API REST pour l'interface
 const app = express();
